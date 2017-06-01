@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">MusicOrg</string>
+    <string name="label_button">Labels</string>
+    <string name="release_button">Releases</string>
+    <string name="label_label">Label:</string>
+    <string name="location_label">Location:</string>
+    <string name="contact_label">Contact Name:</string>
+    <string name="action_create_label">New Label</string>
+    <string name="action_about">About</string>
+    <string name="about_label">Coded By:</string>
+    <string name="city_label">City:</string>
+    <string name="country_label">Country:</string>
+    <string name="email_label">Email:</string>
+    <string name="phone_label">Phone:</string>
+    <string name="save_label">Save</string>
+    <string name="cancel_label">cancel</string>
+    <string name="contact_made_label">Already In Contact?</string>
+    <string name="music_submitted_label">Music Submitted?</string>
+    <string name="edit_button">Edit</string>
+    <string name="delete_button">Delete</string>
+</resources>
