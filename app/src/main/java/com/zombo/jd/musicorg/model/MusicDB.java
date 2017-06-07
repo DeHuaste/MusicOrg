@@ -18,16 +18,16 @@ public class MusicDB {
     private static final String TAG = ": MUSIC DATABASE :";
 
 
-    public static final String DB_NAME = "question.db";
+    public static final String DB_NAME = "music.db";
     public static final int    DB_VERSION = 1;
 
     public static final String LABEL_TABLE = "label";
 
-    public static final String QUESTION_ID = "_id";
-    public static final int QUESTION_ID_COL = 0;
+    public static final String LABEL_ID = "_id";
+    public static final int LABEL_ID_COL = 0;
 
-    public static final String QUESTION_TEXT = "question";
-    public static final int QUESTION_COL = 1;
+    public static final String LABEL_TEXT = "label";
+    public static final int LABEL_COL = 1;
 
     public static final String STATUS = "status";
     public static final int STATUS_COL = 2;
@@ -35,14 +35,14 @@ public class MusicDB {
     public static final String ANSWER = "answer";
     public static final int ANSWER_COL = 3;
 
-    public static final String CREATE_QUESTION_TABLE =
+    public static final String CREATE_LABEL_TABLE =
             "CREATE TABLE " + LABEL_TABLE + " (" +
-                    QUESTION_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    QUESTION_TEXT + " TEXT NOT NULL, " +
+                    LABEL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    LABEL_TEXT + " TEXT NOT NULL, " +
                     STATUS + " INTEGER, " +
                     ANSWER + " INTEGER);";
 
-    public static final String DROP_QUESTION_TABLE =
+    public static final String DROP_LABEL_TABLE =
             "DROP TABLE IF EXISTS " + LABEL_TABLE;
 
     private static Context ctx;
@@ -57,12 +57,9 @@ public class MusicDB {
 
         @Override
         public void onCreate(SQLiteDatabase db) {
-            db.execSQL(CREATE_QUESTION_TABLE);
+            //TODO: Check if DB already has data?
+            db.execSQL(CREATE_LABEL_TABLE);
             Log.d(TAG, "Inserting into DB...");
-//            for(int i = 0; i < questions.length; i++) {
-//                int answer = true == key[i] ? QuestionExtraStrings.TRUE : QuestionExtraStrings.FALSE;
-//                db.execSQL("INSERT INTO " + LABEL_TABLE + " VALUES (" + i + ",'" + questions[i] + "'," + Question.UNANSWERED + "," + answer + ")");
-//            }
             Log.d(TAG, "DB populated...");
         }
 
@@ -73,7 +70,7 @@ public class MusicDB {
             Log.d(TAG, "Upgrading db from version "
                     + oldVersion + " to " + newVersion);
 
-            db.execSQL(MusicDB.DROP_QUESTION_TABLE);
+            db.execSQL(MusicDB.DROP_LABEL_TABLE);
             onCreate(db);
         }
     }
@@ -136,7 +133,7 @@ public class MusicDB {
 //        cv.put(STATUS, question.getStatus());
 //        cv.put(ANSWER, question.getAnswer());
 
-        String where = QUESTION_ID + "=?";
+        String where = LABEL_ID + "=?";
         String[] whereArgs = { String.valueOf(label.getId()) };
 
         this.openWriteableDB();
@@ -149,7 +146,7 @@ public class MusicDB {
     }
 
     public int deleteLabel(long id) {
-        String where = QUESTION_ID + "= ?";
+        String where = LABEL_ID + "= ?";
         String[] whereArgs = { String.valueOf(id) };
 
         this.openWriteableDB();
@@ -160,8 +157,8 @@ public class MusicDB {
     }
 
     public void dropAndRecreateDB(){
-        db.execSQL(DROP_QUESTION_TABLE);
-        db.execSQL(CREATE_QUESTION_TABLE);
+        db.execSQL(DROP_LABEL_TABLE);
+        db.execSQL(CREATE_LABEL_TABLE);
         Log.d(TAG, "Inserting into DB...");
 //        for(int i = 0; i < questions.length; i++) {
 //            int answer = true == key[i] ? QuestionExtraStrings.TRUE : QuestionExtraStrings.FALSE;
@@ -207,7 +204,7 @@ public class MusicDB {
     }
 
     public Label getLabel(long id) {
-        String where = QUESTION_ID + "=?";
+        String where = LABEL_ID + "=?";
         String[] whereArgs = { Long.toString(id) };
 
         this.openReadableDB();
