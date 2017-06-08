@@ -16,9 +16,11 @@ import com.zombo.jd.musicorg.model.TestAdapter;
 import com.zombo.jd.musicorg.util.GlobalConstants;
 
 public class LabelListActivity extends AppCompatActivity {
+
     private final String TAG = "LABEL LIST ACTIVITY";
     ListView labelList;
-    private final int REQUEST_CODE = 7777;
+    private final int REQUEST_CODE = 100;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,7 +30,6 @@ public class LabelListActivity extends AppCompatActivity {
 //        setSupportActionBar(toolbar);
 
         initializeList();
-
     }
 
     private void initializeList(){
@@ -83,9 +84,16 @@ public class LabelListActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
+
         int id = item.getItemId();
+
         if(id == R.id.action_create_label){
             Intent intent = new Intent(this, LabelCreateActivity.class);
+            startActivity(intent);
+            return true;
+
+        } else if (id == R.id.action_create_release) {
+            Intent intent = new Intent(this, ReleaseCreateActivity.class);
             startActivity(intent);
             return true;
 
@@ -94,8 +102,8 @@ public class LabelListActivity extends AppCompatActivity {
             startActivity(intent);
             return true;
         }
-        return super.onOptionsItemSelected(item);
 
+        return super.onOptionsItemSelected(item);
 
     }
 
