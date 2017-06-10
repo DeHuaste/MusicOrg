@@ -1,5 +1,7 @@
 package com.zombo.jd.musicorg.model.dataObjects;
 
+import com.zombo.jd.musicorg.util.GlobalConstants;
+
 /**
  * Created by jd on 12/20/15.
  * This class represents one row in the labels table
@@ -100,5 +102,17 @@ public class Label {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public String toString() {
+        return getId() + GlobalConstants.COMMA +
+                getCity() + GlobalConstants.COMMA +
+                getContactMade() + GlobalConstants.COMMA +
+                getCountry() + GlobalConstants.COMMA +
+                getEmail() + GlobalConstants.COMMA +
+                getMusicReleased() + GlobalConstants.COMMA +
+                getName() + GlobalConstants.COMMA +
+                getPhone() + GlobalConstants.COMMA +
+                getPrimaryContact();
     }
 }

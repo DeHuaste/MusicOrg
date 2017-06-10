@@ -5,10 +5,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.zombo.jd.musicorg.model.TestAdapter;
@@ -26,15 +29,20 @@ public class LabelCreateActivity extends AppCompatActivity implements TextWatche
     EditText labelContact;
     EditText labelEmail;
     EditText labelPhone;
+    TextView labelIdView;
 
     CheckBox contactMade;
     CheckBox demoSubmitted;
+
+    private boolean editSelected = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_label_create);
 
+
+        labelIdView = (TextView)findViewById(R.id.labelId);
         labelName = (EditText)findViewById(R.id.labelNameInput);
         labelCity = (EditText)findViewById(R.id.cityInput);
         labelCountry = (EditText)findViewById(R.id.countryInput);
@@ -49,7 +57,7 @@ public class LabelCreateActivity extends AppCompatActivity implements TextWatche
     }
 
     public void initializeForm(){
-        labelName.addTextChangedListener(this);
+
         saveButton = (Button)findViewById(R.id.saveButton);
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,6 +73,27 @@ public class LabelCreateActivity extends AppCompatActivity implements TextWatche
                 returnToLabelList();
             }
         });
+
+        if(getIntent() != null && getIntent().getExtras() != null) {
+            Intent intent = getIntent();
+            editSelected = true;
+
+            labelIdView.setText(String.valueOf(intent.getLongExtra(GlobalConstants.LABEL_ID, -1)));
+            labelName.setText(intent.getStringExtra(GlobalConstants.LABEL_NAME));
+            labelCity.setText(intent.getStringExtra(GlobalConstants.LABEL_CITY));
+            labelCountry.setText(intent.getStringExtra(GlobalConstants.LABEL_COUNTRY));
+            labelContact.setText(intent.getStringExtra(GlobalConstants.LABEL_PRIMARY_CONTACT));
+            labelEmail.setText(intent.getStringExtra(GlobalConstants.LABEL_EMAIL));
+            labelPhone.setText(intent.getStringExtra(GlobalConstants.LABEL_PHONE));
+
+            contactMade.setText(intent.getStringExtra(GlobalConstants.LABEL_CONTACT_MADE));
+            demoSubmitted.setText(intent.getStringExtra(GlobalConstants.LABEL_MUSIC_RELEASE));
+            saveButton.setEnabled(true);
+
+        } else {
+            labelName.addTextChangedListener(this);
+        }
+
     }
 
 
@@ -73,7 +102,14 @@ public class LabelCreateActivity extends AppCompatActivity implements TextWatche
         TestAdapter dbHelper = new TestAdapter(getApplicationContext());
         dbHelper.createDatabase();
         dbHelper.open();
-        dbHelper.insertLabel(label);
+        if(editSelected) {
+            dbHelper.updateLabel(label);
+
+        } else {
+            dbHelper.insertLabel(label);
+
+        }
+
         dbHelper.close();
 
         Toast.makeText(this, "SAVED!", Toast.LENGTH_LONG).show();
@@ -97,7 +133,7 @@ public class LabelCreateActivity extends AppCompatActivity implements TextWatche
         label.setPhone(labelPhone.getText().toString());
         label.setContactMade(contactMade.isChecked() ? GlobalConstants.TRUE : GlobalConstants.FALSE);
         label.setMusicReleased(demoSubmitted.isChecked() ? GlobalConstants.TRUE : GlobalConstants.FALSE);
-
+        label.setId(Integer.parseInt(labelIdView.getText().toString()));
         return label;
     }
     private void returnToLabelList(){
@@ -123,6 +159,37 @@ public class LabelCreateActivity extends AppCompatActivity implements TextWatche
     //Don't care
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.label_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+
+        int id = item.getItemId();
+
+        if(id == R.id.action_create_label){
+            Intent intent = new Intent(this, LabelCreateActivity.class);
+            startActivity(intent);
+            return true;
+
+        } else if (id == R.id.action_create_release) {
+            Intent intent = new Intent(this, ReleaseCreateActivity.class);
+            startActivity(intent);
+            return true;
+
+        } else if (id == R.id.action_about) {
+            Intent intent = new Intent(this, AboutActivity.class);
+            startActivity(intent);
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
 
     }
 }

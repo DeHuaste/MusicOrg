@@ -97,4 +97,10 @@
             android:id="@+id/deleteButton"
             android:layout_weight="1" />
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/labelId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="invisible" />
 </LinearLayout>

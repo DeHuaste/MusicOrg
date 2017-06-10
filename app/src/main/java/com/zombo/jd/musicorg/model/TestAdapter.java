@@ -156,4 +156,24 @@ public class TestAdapter
             throw mSQLException;
         }
     }
+
+    public void deleteLabelById(long id) {
+
+        mDb.delete(GlobalConstants.LABEL_TABLE, GlobalConstants.LABEL_ID+"=?", new String[]{Long.toString(id)});
+    }
+
+    public void updateLabel(Label label) {
+        ContentValues cv = new ContentValues();
+        cv.put(GlobalConstants.LABEL_ID, label.getId());
+        cv.put(GlobalConstants.LABEL_NAME,label.getName());
+        cv.put(GlobalConstants.LABEL_CITY, label.getCity());
+        cv.put(GlobalConstants.LABEL_CONTACT_MADE, label.getContactMade());
+        cv.put(GlobalConstants.LABEL_MUSIC_RELEASE, label.getMusicReleased());
+        cv.put(GlobalConstants.LABEL_COUNTRY, label.getCountry());
+        cv.put(GlobalConstants.LABEL_EMAIL, label.getEmail());
+        cv.put(GlobalConstants.LABEL_PHONE, label.getPhone());
+        cv.put(GlobalConstants.LABEL_PRIMARY_CONTACT, label.getPrimaryContact());
+
+        mDb.update(GlobalConstants.LABEL_TABLE, cv, GlobalConstants.LABEL_ID + "=?", new String[]{Long.toString(label.getId())});
+    }
 }

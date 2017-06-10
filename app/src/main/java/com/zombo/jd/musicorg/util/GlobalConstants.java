@@ -8,6 +8,7 @@ public class GlobalConstants {
     public static String TRUE = "Y";
     public static String FALSE = "N";
     public static String INTENT_LABEL_ID = "labelId";
+    public static String COMMA = ",";
 
     //TABLE COLUMN DEFINITIONS
     public static String LABEL_TABLE = "label";
@@ -30,4 +31,6 @@ public class GlobalConstants {
     public static String RELEASE_CAT_NO = "catalog_number";
     public static String RELEASE_ARTWORK = "artwork";
     public static String RELEASE_FORMAT = "format";
+
+
 }
